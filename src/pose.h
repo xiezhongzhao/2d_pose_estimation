@@ -21,16 +21,20 @@ namespace pose{
 
     class Pose2d{
     public:
-        Pose2d();
-        explicit Pose2d(string& model_file);
-        ~Pose2d();
-        static cv::Mat preprocessing(cv::Mat& ori_image, int height, int width);
-        void convertHWC2CHW(cv::Mat& img, float* model_input);
+        Pose2d(string& model_file, int height, int width);
+        vector<cv::Point> getJoints(cv::Mat& ori_img);
+
+    private:
+        cv::Mat preprocessing(cv::Mat& ori_image);
+        void convertHWC2CHW(cv::Mat& img_norm, float* model_input);
         void heatmapToJoints(cv::Mat& ori_img, float* model_output, std::vector<cv::Point>& points);
         cv::Mat drawSkeleton(cv::Mat& ori_img, std::vector<cv::Point>& points);
-        vector<cv::Point> getJoints(cv::Mat& ori_img);
-    private:
+
         string model_file;
+        region reg{0, 0, 0, 0};
+        int height;
+        int width;
+        const int heatmap_size = 28;
     };
 
     class Pose3d{

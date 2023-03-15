@@ -8,19 +8,16 @@
 #include "inference.h"
 
 namespace pose{
-    region reg;
 
-    Pose2d::Pose2d() = default;
-
-    Pose2d::Pose2d(std::string &model_file) {
+    Pose2d::Pose2d(std::string &model_file, int height, int width) {
         this->model_file = model_file;
+        this->height = height;
+        this->width = width;
     }
 
-    Pose2d::~Pose2d() = default;
-
-    cv::Mat Pose2d::preprocessing(cv::Mat& raw_image, int inputHeight, int inputWidth){
+    cv::Mat Pose2d::preprocessing(cv::Mat& raw_image){
         int src_h = raw_image.rows, src_w = raw_image.cols;
-        int dst_h = inputHeight, dst_w = inputWidth;
+        int dst_h = this->height, dst_w = this->width;
 
         float h = (float)dst_w * (static_cast<float>(src_h)/static_cast<float>(src_w));
         float w = (float)dst_h * (static_cast<float>(src_w)/static_cast<float>(src_h));
@@ -39,9 +36,9 @@ namespace pose{
         // 保持输入图像原始比例，将图像大小resize为224*224
         // 将缩放后的原始图像在224*224图像的位置保存在私有标量area里
 
-        reg.left = left, reg.top = top;
-        reg.width = dst_w - left - right;
-        reg.height = dst_h - top - bottom;
+        this->reg.left = left, this->reg.top = top;
+        this->reg.width = dst_w - left - right;
+        this->reg.height = dst_h - top - bottom;
 
         std::vector<float> mean_vec = {0.485, 0.456, 0.406};
         std::vector<float> stddev_vec = {0.229, 0.226, 0.225};
@@ -91,14 +88,15 @@ namespace pose{
     void Pose2d::heatmapToJoints(cv::Mat& ori_img, float* model_output, std::vector<cv::Point>& points){
         // heatmaps to joints == [1, 14, 28, 28]->[14, 2]
         points.clear();
-        auto* feature_map = new float[28*28];
+        int pixels_heatmap = this->heatmap_size * this->heatmap_size;
+        auto* feature_map = new float[pixels_heatmap];
         for(int j=0; j<14; ++j){
             int index = 0;
-            for(int i=0; i<28*28; ++i){
-                feature_map[index] = (float)model_output[i+j*28*28];
+            for(int i=0; i<pixels_heatmap; ++i){
+                feature_map[index] = (float)model_output[i+j*pixels_heatmap];
                 ++index;
             }
-            cv::Mat feature_map_mat(28, 28, CV_32FC1, feature_map);
+            cv::Mat feature_map_mat(this->heatmap_size, this->heatmap_size, CV_32FC1, feature_map);
             double countMinVal = 0, countMaxVal = 0;
             cv::Point minPoint, maxPoint;
             cv::minMaxLoc(feature_map_mat,
@@ -107,13 +105,13 @@ namespace pose{
 
             auto px = (float)maxPoint.x;
             auto py = (float)maxPoint.y;
-            float x = px / 28 * 224;
-            float y = py / 28 * 224;
+            float x = px / this->heatmap_size * this->width;
+            float y = py / this->heatmap_size * this->height;
             int xx = (int)x;
             int yy = (int)y;
 
-            int start_x = reg.left, start_y = reg.top;
-            int reg_width = reg.width, reg_height = reg.height;
+            int start_x = this->reg.left, start_y = this->reg.top;
+            int reg_width = this->reg.width, reg_height = this->reg.height;
             float w_times = (float)ori_img.cols / static_cast<float>(reg_width);
             float h_times = (float)ori_img.rows / static_cast<float>(reg_height);
             xx = static_cast<int>((float)(xx - start_x) * w_times);
@@ -150,7 +148,7 @@ namespace pose{
 
     vector<cv::Point> Pose2d::getJoints(cv::Mat& img) {
 
-        cv::Mat input_img = preprocessing(img, 224, 224); //[224, 224, 3]
+        cv::Mat input_img = preprocessing(img); //[224, 224, 3]
         // 输入模型图片大小[224, 224, 3]->[1, 3, 224, 224]
         float* model_input = new float[input_img.rows * input_img.cols * input_img.channels()];
         convertHWC2CHW(input_img, model_input);

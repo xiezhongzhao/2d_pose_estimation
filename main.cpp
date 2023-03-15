@@ -52,7 +52,7 @@ int main(){
     // nanodet人体检测调用
     detector::NanoDetPlus detect(nanodet_model_file, coco_name, 288, 512, 0.3, 0.4);
     // mobilenetv2人体姿态估计
-    pose::Pose2d pose2D(mobilev2_model_file);
+    pose::Pose2d pose2D(mobilev2_model_file, 224, 224);
     // 所有人体区域
     vector<detector::BoxInfo> boxes = detect.object_bboxes(ori_img);
 

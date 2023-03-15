@@ -201,7 +201,7 @@ namespace detector{
 
         TfliteInterface interface;
         float* model_input = new float[dst.rows*dst.cols*dst.channels()];
-        float* model_output = new float[3064*33];
+        float* model_output = new float[this->output_size];
         interface.infer(model_file, model_input, dst, model_output);
 
         //generate proposals
@@ -242,7 +242,7 @@ namespace detector{
 
         TfliteInterface interface;
         float* model_input = new float[dst.rows * dst.cols * dst.channels()];
-        float* model_output = new float[3064*33];
+        float* model_output = new float[this->output_size];
         interface.infer(model_file, model_input, dst, model_output);
 
         //generate proposals

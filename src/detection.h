@@ -57,6 +57,7 @@ namespace detector{
         const int reg_max = 7;
         const int num_stages = 4;
         const int stride[4] = {8, 16, 32, 64};
+        int output_size = 1 * 3064 * 33;
 
 //    const float mean[3] = { 103.53, 116.28, 123.675 };
 //    const float std[3] = { 57.375, 57.12, 58.395 };
