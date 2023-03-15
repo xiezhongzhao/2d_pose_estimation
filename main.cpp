@@ -45,7 +45,7 @@ int main(){
     std::string nanodet_model_file = root_dir + "./model/nanodetplus_person.tflite";
     std::string mobilev2_model_file = root_dir + "./model/mobilenetv2_224_224_heatmap.tflite";
     std::string coco_name = root_dir + "./model/coco.names";
-    std::string img_file = root_dir + "data/child.jpg";
+    std::string img_file = root_dir + "data/girls.jpg";
 
     cv::Mat ori_img = cv::imread(img_file);
 
