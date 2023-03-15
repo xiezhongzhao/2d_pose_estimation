@@ -12,9 +12,12 @@ set(depLibs ${CMAKE_CURRENT_SOURCE_DIR}/lib/*)
 file(GLOB libs ${depLibs})
 message(STATUS "depLibs: ${libs}")
 
+# pose2d
+add_subdirectory(${PROJECT_SOURCE_DIR}/src)
+
 add_executable(2d_pose_estimation main.cpp)
 
-target_link_libraries(2d_pose_estimation ${libs} )
+target_link_libraries(2d_pose_estimation pose2d ${libs} )
 
 
 
