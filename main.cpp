@@ -9,36 +9,6 @@
 #include "src/pose.h"
 #include "src/Filter.h"
 
-cv::Mat drawSkeleton(cv::Mat& ori_img, std::vector<cv::Point>& points, int rec_x, int rec_y){
-
-    for(auto& point : points){
-        point.x = point.x + rec_x;
-        point.y = point.y + rec_y;
-    }
-
-    for(auto & point : points){
-        cv::circle(ori_img,
-                   cv::Point(point.x,point.y),
-                   6, cv::Scalar(0, 0, 255), -1);
-    }
-    cv::Point hip;
-    hip.x = (points[8].x + points[9].x) / 2;
-    hip.y = (points[8].y + points[9].y) / 2;
-    std::vector<std::vector<int>> joints = {{0,1}, {2,3}, {2,4}, {4,6}, {3,5},
-                                            {5,7}, {8,9}, {8,10}, {10,12},
-                                            {9,11}, {11,13}};
-    for(auto & joint : joints){
-        cv::line(ori_img,
-                 cv::Point(points[joint[0]].x, points[joint[0]].y),
-                 cv::Point(points[joint[1]].x, points[joint[1]].y),
-                 cv::Scalar(0, 0, 225), 3);
-    }
-    cv::circle(ori_img, cv::Point(hip.x, hip.y),
-               6, cv::Scalar(0,0,255), -1);
-    cv::line(ori_img, cv::Point(points[1].x, points[1].y), hip,
-             cv::Scalar(0, 0, 225), 3);
-    return ori_img;
-}
 
 void detectImg(Info& info){
 
@@ -73,7 +43,7 @@ void detectImg(Info& info){
         vector<cv::Point> rec_joints = pose2D.getJoints(img_roi);
 
         // 获得人体姿态关键点，并且投影会原始图像
-        drawSkeleton(ori_img, rec_joints, xmin, ymin);
+        pose2D.drawSkeleton(ori_img, rec_joints, xmin, ymin);
 
         // 画出人体目标框和对应的人体姿态关键点
         rectangle(ori_img, Point(xmin, ymin), Point(xmax, ymax), Scalar(0, 0, 255), 1);
@@ -154,7 +124,7 @@ void detectVideo(Info& info){
             }
 
             // 获得人体姿态关键点，并且投影会原始图像
-            drawSkeleton(frame, rec_joints_filter_int, xmin, ymin);
+            pose2D.drawSkeleton(frame, rec_joints_filter_int, xmin, ymin);
 
             // 画出人体目标框和对应的人体姿态关键点
             rectangle(frame, Point(xmin, ymin), Point(xmax, ymax), Scalar(0, 0, 255), 2);
@@ -184,8 +154,8 @@ int main(){
     info.video_in_path = Info::addRootPath(info.root_path,"data/black_man.mp4");
     info.video_out_path = Info::addRootPath(info.root_path,"data/black_man_out.avi");
 
-//    detectImg(info);
-    detectVideo(info);
+    detectImg(info);
+//    detectVideo(info);
     return 0;
 }
 

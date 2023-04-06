@@ -23,12 +23,11 @@ namespace pose{
     public:
         Pose2d(string& model_file, int height, int width);
         vector<cv::Point> getJoints(cv::Mat& ori_img);
-
+        cv::Mat drawSkeleton(cv::Mat& ori_img, std::vector<cv::Point>& points, int rec_x, int rec_y);
     private:
         cv::Mat preprocessing(cv::Mat& ori_image);
         void convertHWC2CHW(cv::Mat& img_norm, float* model_input);
         void heatmapToJoints(cv::Mat& ori_img, float* model_output, std::vector<cv::Point>& points);
-        cv::Mat drawSkeleton(cv::Mat& ori_img, std::vector<cv::Point>& points);
 
         string model_file;
         region reg{0, 0, 0, 0};

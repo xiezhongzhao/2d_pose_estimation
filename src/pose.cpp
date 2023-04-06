@@ -121,11 +121,17 @@ namespace pose{
         }
     }
 
-    cv::Mat Pose2d::drawSkeleton(cv::Mat& ori_img, std::vector<cv::Point>& points){
+    cv::Mat Pose2d::drawSkeleton(cv::Mat& ori_img, std::vector<cv::Point>& points, int rec_x, int rec_y){
+
+        for(auto& point : points){
+            point.x = point.x + rec_x;
+            point.y = point.y + rec_y;
+        }
+
         for(auto & point : points){
             cv::circle(ori_img,
                        cv::Point(point.x,point.y),
-                       10, cv::Scalar(0, 0, 255), -1);
+                       6, cv::Scalar(0, 0, 255), -1);
         }
         cv::Point hip;
         hip.x = (points[8].x + points[9].x) / 2;
@@ -140,7 +146,7 @@ namespace pose{
                      cv::Scalar(0, 0, 225), 3);
         }
         cv::circle(ori_img, cv::Point(hip.x, hip.y),
-                   10, cv::Scalar(0,0,255), -1);
+                   6, cv::Scalar(0,0,255), -1);
         cv::line(ori_img, cv::Point(points[1].x, points[1].y), hip,
                  cv::Scalar(0, 0, 225), 3);
         return ori_img;
