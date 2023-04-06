@@ -214,7 +214,7 @@ namespace detector{
 
         float ratioh = (float)cv_image.rows / newh;
         float ratiow = (float)cv_image.cols / neww;
-        cout << "boxes: " << generate_boxes.size() << endl;
+//        cout << "boxes: " << generate_boxes.size() << endl;
         for (size_t i = 0; i < generate_boxes.size(); ++i)
         {
             int xmin = (int)max((generate_boxes[i].x1 - left)*ratiow, 0.f);

@@ -44,14 +44,14 @@ void TfliteInterface::infer(string& model_file, float* input, cv::Mat& img, floa
     interpreter->SetNumThreads(number_of_threads);
     // 定义输入对象
     int input_index =  interpreter->inputs()[0];
-    LOG(INFO) << "input_index: " << input_index << "\n";
+//    LOG(INFO) << "input_index: " << input_index << "\n";
     // 获取输入tensor的维度
     TfLiteIntArray* input_dims = interpreter->tensor(input_index)->dims;
-    LOG(INFO) << "input_dims.size: " << input_dims->size << "\n";
-    LOG(INFO) << "input_dims[0]: " << input_dims->data[0] << "\n";
-    LOG(INFO) << "input_dims[1]: " << input_dims->data[1] << "\n";
-    LOG(INFO) << "input_dims[2]: " << input_dims->data[2] << "\n";
-    LOG(INFO) << "input_dims[3]: " << input_dims->data[3] << "\n";
+//    LOG(INFO) << "input_dims.size: " << input_dims->size << "\n";
+//    LOG(INFO) << "input_dims[0]: " << input_dims->data[0] << "\n";
+//    LOG(INFO) << "input_dims[1]: " << input_dims->data[1] << "\n";
+//    LOG(INFO) << "input_dims[2]: " << input_dims->data[2] << "\n";
+//    LOG(INFO) << "input_dims[3]: " << input_dims->data[3] << "\n";
     TfLiteType input_type = interpreter->tensor(input_index)->type;
     if(input_type == kTfLiteFloat32){
         auto* model_input = interpreter->typed_tensor<float>(input_index);
@@ -68,13 +68,13 @@ void TfliteInterface::infer(string& model_file, float* input, cv::Mat& img, floa
 
     // 获取结果
     int output_index = interpreter->outputs()[0];
-    LOG(INFO) << "output_index: " << output_index << "\n";
+//    LOG(INFO) << "output_index: " << output_index << "\n";
     TfLiteIntArray* output_dims = interpreter->tensor(output_index)->dims;
-    LOG(INFO) << "output_dims->size: " << output_dims->size << "\n";
-    LOG(INFO) << "output_dims[0]: " << output_dims->data[0] << "\n";
-    LOG(INFO) << "output_dims[1]: " << output_dims->data[1] << "\n";
-    LOG(INFO) << "output_dims[2]: " << output_dims->data[2] << "\n";
-    LOG(INFO) << "output_dims[3]: " << output_dims->data[3] << "\n";
+//    LOG(INFO) << "output_dims->size: " << output_dims->size << "\n";
+//    LOG(INFO) << "output_dims[0]: " << output_dims->data[0] << "\n";
+//    LOG(INFO) << "output_dims[1]: " << output_dims->data[1] << "\n";
+//    LOG(INFO) << "output_dims[2]: " << output_dims->data[2] << "\n";
+//    LOG(INFO) << "output_dims[3]: " << output_dims->data[3] << "\n";
     TfLiteTensor* output_tensor = interpreter->tensor(output_index);
     if(output_tensor->type == kTfLiteUInt8){
         auto zero_point = output_tensor->params.zero_point;
