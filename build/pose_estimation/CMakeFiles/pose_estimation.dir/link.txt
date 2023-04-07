@@ -1,0 +1,2 @@
+/usr/bin/ar qc libpose_estimation.a  CMakeFiles/pose_estimation.dir/src/euro_filter.cpp.o CMakeFiles/pose_estimation.dir/src/nanodet.cpp.o CMakeFiles/pose_estimation.dir/src/pose2d.cpp.o CMakeFiles/pose_estimation.dir/src/tflite_inference.cpp.o
+/usr/bin/ranlib libpose_estimation.a
