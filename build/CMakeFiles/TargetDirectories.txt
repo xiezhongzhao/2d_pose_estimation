@@ -1,8 +1,0 @@
-/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/build/CMakeFiles/rebuild_cache.dir
-/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/build/CMakeFiles/edit_cache.dir
-/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/build/pose_estimation/CMakeFiles/rebuild_cache.dir
-/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/build/pose_estimation/CMakeFiles/edit_cache.dir
-/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/build/pose_estimation/CMakeFiles/pose_estimation.dir
-/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/build/test/CMakeFiles/rebuild_cache.dir
-/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/build/test/CMakeFiles/edit_cache.dir
-/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/build/test/CMakeFiles/test.dir

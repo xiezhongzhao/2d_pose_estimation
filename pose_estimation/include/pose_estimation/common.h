@@ -12,6 +12,10 @@
 
 #include <iostream>
 #include <memory>
+#include <thread>
+#include <mutex>
+#include <chrono>
+#include <condition_variable>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -20,14 +24,14 @@
 #include <cmath>
 #include <ctime>
 
-#include "opencv2/opencv.hpp"
-#include "opencv2/videoio.hpp"
-#include "opencv2/core.hpp"
+#include <opencv2/opencv.hpp>
+#include <opencv2/videoio.hpp>
+#include <opencv2/core.hpp>
 
-#include "tensorflow/lite/interpreter.h"
-#include "tensorflow/lite/kernels/register.h"
-#include "tensorflow/lite/model.h"
-#include "tensorflow/lite/tools/gen_op_registration.h"
+#include <tensorflow/lite/interpreter.h>
+#include <tensorflow/lite/kernels/register.h>
+#include <tensorflow/lite/model.h>
+#include <tensorflow/lite/tools/gen_op_registration.h>
 
 #define LOG(x) std::cerr
 const double PI = 3.141592653589793238463;

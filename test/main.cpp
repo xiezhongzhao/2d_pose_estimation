@@ -149,7 +149,7 @@ int main(){
     info.root_path = "/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/";
     info.nanodet_path = Info::addRootPath(info.root_path, "model/nanodetplus_person.tflite");
     info.class_path = Info::addRootPath(info.root_path, "model/coco.names");
-    info.pose_path = Info::addRootPath(info.root_path,"model/mobilenetv2_224_224_quant_heatmap.tflite");
+    info.pose_path = Info::addRootPath(info.root_path,"model/mobilenetv2_224_224_heatmap.tflite");
     info.img_in_path = Info::addRootPath(info.root_path,"data/family.jpg");
     info.img_out_path = Info::addRootPath(info.root_path,"data/family_out.jpg");
     info.video_in_path = Info::addRootPath(info.root_path,"data/black_man.mp4");

@@ -23,6 +23,7 @@ TfliteInterface::~TfliteInterface() = default;
 
 
 void TfliteInterface::infer(string& model_file, float* input, cv::Mat& img, float* result){
+    auto t0 = std::chrono::steady_clock::now(); //推理开始时间
     // 加载模型
     model = tflite::FlatBufferModel::BuildFromFile(model_file.c_str());
     if(!model){
@@ -85,6 +86,19 @@ void TfliteInterface::infer(string& model_file, float* input, cv::Mat& img, floa
                model_output,
                output_dims->data[0]*output_dims->data[1]*output_dims->data[2]*output_dims->data[3]*sizeof(float));
     }
+    auto t1 = std::chrono::steady_clock::now();
+    auto dt = t1 - t0;
+    using double_ms = std::chrono::duration<double, std::milli>;
+    double ms = std::chrono::duration_cast<double_ms>(dt).count();
+
+    int index = 0; //模型存储路径中分割出模型名称
+    for(int i=1; i<model_file.size(); ++i){
+        if(model_file[i] == '/'){
+            index = i+1;
+        }
+    }
+    string model_name = model_file.substr(index, model_file.size()-index+1);
+    std::cout << model_name + " model inference costs: " << ms << " ms" << std::endl;
 }
 
 

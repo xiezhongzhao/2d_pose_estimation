@@ -167,9 +167,6 @@ namespace pose{
         std::vector<cv::Point> points;
         heatmapToJoints(img, model_output, points);
 
-//        drawSkeleton(img, points);
-//        cv::imwrite("/mnt/e/WorkSpace/CPlusPlus/2d-pose-estimation/points.png", img);
-//        LOG(INFO) << "the pose tflite example finished" << "\n";
         return points;
     }
 
