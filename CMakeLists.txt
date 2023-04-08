@@ -15,4 +15,3 @@ include(${PROJECT_SOURCE_DIR}/cmake/thirdParty.cmake)
 
 add_subdirectory(pose_estimation)
 add_subdirectory(test)
-
