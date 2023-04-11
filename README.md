@@ -74,3 +74,27 @@ ____
 
 ![](./data/page2.png)
 
+(3) 如果直接通过`公网IP地址`访问该网页，进行如下设置：
+
+```
+#### nginx运行、停止、重启、查看状态
+#sudo /etc/init.d/nginx start
+#sudo /etc/init.d/nginx stop
+#sudo /etc/init.d/nginx restart
+#sudo /etc/init.d/nginx status
+```
+
+首先安装`sudo apt install nginx`,然后修改`nginx`的配置文件`vim /etc/nginx/sites-available/default`, 最后重启nginx即可。
+
+```
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name localhost;
+
+        location / {
+                proxy_pass http://127.0.0.1:12345;
+        }
+```
+
+其中server_name为域名，localhost代表通过ip访问，配置好Nginx后就可以启动了，可以通过`ps aux | grep nginx`查看nginx进程，然后在浏览器上输入http://ip看是否正常运行。
