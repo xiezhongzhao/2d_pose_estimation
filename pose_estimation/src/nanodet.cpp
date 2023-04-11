@@ -229,7 +229,7 @@ namespace detector{
             generate_boxes[i].y2 = static_cast<float>(ymax);
         }
         return generate_boxes;
-        LOG(INFO) << "the detector tflite example finished" << "\n";
+        LOG(INFO) << "the detector tflite example.py finished" << "\n";
     }
 
     void NanoDetPlus::detect(Mat& srcimg)

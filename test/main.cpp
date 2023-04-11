@@ -146,7 +146,7 @@ void detectVideo(Info& info){
 int main(){
 
     Info info;
-    info.root_path = "/mnt/e/Project/CPP/2d_pose_estimation/";
+    info.root_path = "/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/";
     info.nanodet_path = Info::addRootPath(info.root_path, "model/nanodetplus_person.tflite");
     info.class_path = Info::addRootPath(info.root_path, "model/coco.names");
     info.pose_path = Info::addRootPath(info.root_path,"model/mobilenetv2_224_224_heatmap.tflite");

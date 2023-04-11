@@ -26,6 +26,7 @@
 * 测试帧率       
 * 模型并行推理              
                         
+
 第二阶段：
 * 封装Android接口         
 * 添加GPU, DSP调用接口       
@@ -35,8 +36,41 @@
 * 多硬件协同调度(CPU, GPU, DSP)
 * 功耗测试
 
+___
 
+#### pybind11封装人体姿态估计功能
 
+（1）`bind`文件夹用于生成人体姿态功能的`python`接口
 
+```
+cd bind
+cmake -B build 
+cmake --build build --parallel 12
+```
 
+（2）生成链接库`inference.cpython-310-x86_64-linux-gnu.so`在`build`文件夹下
+
+（3）将链接库放在`infer.py`同一目录，当然也可以通过下面方式添加链接库
+
+```
+import sys
+sys.path.append("/mnt/e/WorkSpace/CPlusPlus/2d_pose_estimation/bind/build/")
+import inference
+```
+
+____
+
+#### 将算法部署到服务器
+
+（1）`server_deploy`文件夹用于部署算法到服务器
+
+```
+ nohup gunicorn app:app -c gunicorn.conf.py &
+```
+
+（2）通过`公网IP:12345`访问网页
+
+![](./data/page1.png)
+
+![](./data/page2.png)
 
